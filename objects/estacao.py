@@ -13,7 +13,6 @@ class Estacao:
         self.cooldownTransmitir = 0
 
     def printEstacao(self):
-        print("--------------------------")
         print("Numero da estação: "+str(self.numeroEstacao)+"")
         print("Quer efetuar a transmissão: "+str(self.querTransmitir)+"")
         print("Cooldown: "+str(self.cooldownTransmitir)+"")

@@ -16,12 +16,10 @@ class EstacaoCSMA:
         self.cooldownTransmitir = 0
 
     def printEstacao(self):
-        print("--------------------------")
         print("Numero da estação: "+str(self.numeroEstacao)+"")
         print("Quer efetuar a transmissão: " + str(self.emEspera) + "")
         print("Cooldown: "+str(self.cooldownTransmitir)+"")
         print("numVezes que não transmitiu: "+str(self.naoTransmitiu)+"")
-
         print("--------------------------")
 
     def tentarTransmitirCSMA(self,canal : Canal):
@@ -31,14 +29,9 @@ class EstacaoCSMA:
                     self.emEspera = False
                 else:
                     self.naoTransmitiu+=1
-                    #self.colisaoCSMA()
         else:
             self.cooldownTransmitir -=1
 
     def colisaoCSMA(self):
         self.emEspera = True
         self.cooldownTransmitir = random.randint(0, self.limite)
-
-
-
-# self.cooldownTransmitir = random.randint(1, self.limiteAloha)

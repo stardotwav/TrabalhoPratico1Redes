@@ -38,8 +38,11 @@ def executarAlohaSlotted(numeroEstacoes: int,limiteAloha = 1024,impressaoDetalha
     if impressaoDetalhada:
         for i in listaEstacao:
             i.printEstacao()
+        print()
         print("Dados do canal:")
         canalTeste.printCanal()
         print("Tempo: %.4f u segundos"%(float(tempo)*51.2))
+        print("--------------------------")
+        print()
 
     return tempo
