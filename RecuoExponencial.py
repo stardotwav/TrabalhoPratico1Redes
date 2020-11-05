@@ -37,14 +37,15 @@ def executarRecuo(numeroEstacoes: int,impressaoDetalhada = False):
 
 
     if impressaoDetalhada:
-        for i in listaEstacao:
-            i.printEstacao()
+        #for i in listaEstacao:
+            #i.printEstacao()
 
-        print()
-        print("Dados do canal:")
-        canalTeste.printCanal()
-        print("Tempo: %.4f u segundos"%(float(tempo)*51.2))
-        print("--------------------------")
-        print()
+        #print()
+        #print("Dados do canal:")
+        #canalTeste.printCanal()
+        #print("Tempo: %.4f u segundos"%(float(tempo)*51.2))
+        #print("--------------------------")
+        #print()
+        pass
 
     return tempo
