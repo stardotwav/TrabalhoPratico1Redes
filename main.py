@@ -1,6 +1,7 @@
 from alohaSlotted import executarAlohaSlotted
 from CMSA import executarCSMAP
 from RecuoExponencial import executarRecuo
+import matplotlib.pyplot as plt
 
 while(True):
     print("------------------ MENU ------------------")
@@ -16,7 +17,14 @@ while(True):
         maquinas = int(input("Digite o Número de Máquinas usadas: "))
         print()
         print("--------------------------")
-        executarAlohaSlotted(maquinas,5000,True)
+        vetorResultado = []
+        for i in range(33):
+            vetorResultado.append(executarAlohaSlotted(maquinas,1024,True))
+
+        plt.plot(vetorResultado)
+        plt.ylabel('Slotted Aloha')
+        plt.savefig('books_read.png')
+        plt.show()
 
     elif(comando == 2):
         maquinas = int(input("Digite o Número de Máquinas usadas: "))
