@@ -3,10 +3,11 @@ from objects import canal
 
 def executarCSMAP(numeroEstacoes: int,p=1,limite = 1024,impressaoDetalhada = False):
     #O limite considera até quando será o intervalo de tempo aleatório do RANDOM
-    tempo = 0
+    tempo = 2
     canalTeste = canal.Canal()
     N = numeroEstacoes
     listaEstacao = []
+    listaMaquinasTransmitidas = []
     for i in range(N):
         novaEstacao = estacaoCSMA.EstacaoCSMA(i,limite,p)
         novaEstacao.colisaoCSMA()
@@ -15,37 +16,47 @@ def executarCSMAP(numeroEstacoes: int,p=1,limite = 1024,impressaoDetalhada = Fal
     terminouSimular = False
     canalTeste.desocuparCanal()
 
-    while(terminouSimular == False):
+    while terminouSimular == False:
         maquinasTransmitindo = []
 
         for maquina in listaEstacao:
-            maquina.tentarTransmitirCSMA(canalTeste)
-            if maquina.emEspera == False:
+            maquina.tentarTransmitirCSMA(canalTeste,tempo)
+            if not maquina.emEspera:
                 maquinasTransmitindo.append(maquina)
 
         if len(maquinasTransmitindo) == 1:
             canalTeste.ocuparCanal(maquinasTransmitindo[0].numeroEstacao)
-            terminouSimular = True
+            listaMaquinasTransmitidas.append(maquinasTransmitindo[0])
+            listaEstacao.remove(maquinasTransmitindo[0])
 
         elif len(maquinasTransmitindo) > 1:
             for i in maquinasTransmitindo:
                 i.colisaoCSMA()
                 canalTeste.ocorrerColisao()
 
+        if len(listaEstacao) == 0:
+            terminouSimular = True
+            break
         canalTeste.passarCanal()
-        tempo+=1
+        tempo += 1
+        if canalTeste.estadoCanal():
+            canalTeste.desocuparCanal()
 
+    mediaTempo = 0
+    menorTempo = listaMaquinasTransmitidas[0].tempoTransmissao
+    for i in listaMaquinasTransmitidas:
+        mediaTempo += i.tempoTransmissao
+        if i.tempoTransmissao < menorTempo:
+            menorTempo = i.tempoTransmissao
+    mediaTempo = mediaTempo / N
 
     if impressaoDetalhada:
-        #for i in listaEstacao:
-            #i.printEstacao()
+        for i in listaMaquinasTransmitidas:
+            i.printEstacao()
 
-        #print()
-        #print("Dados do canal:")
-        #canalTeste.printCanal()
-        #print("Tempo: %.4f u segundos"%(float(tempo)*51.2))
-        #print("--------------------------")
-        #print()
-        pass
+        print("Dados do canal:")
+        canalTeste.printCanal()
+        print("Primeira máquina transmitir: %.4f u segundos" % (float(menorTempo) * 51.2))
+        print("Média do tempo: %.4f u segundos" % (float(mediaTempo) * 51.2))
 
-    return tempo
+    return menorTempo,mediaTempo

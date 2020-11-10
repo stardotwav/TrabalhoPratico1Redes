@@ -3,10 +3,13 @@ from objects import canal
 
 def executarRecuo(numeroEstacoes: int,impressaoDetalhada = False):
     #O limite considera até quando será o intervalo de tempo aleatório do RANDOM
-    tempo = 0
+    tempo = 2
     canalTeste = canal.Canal()
     N = numeroEstacoes
     listaEstacao = []
+    listaFalhas = []
+    listaMaquinasTransmitidas = []
+
     for i in range(N):
         novaEstacao = estacaoRecuo.Estacao(i)
         novaEstacao.colisao()
@@ -19,33 +22,51 @@ def executarRecuo(numeroEstacoes: int,impressaoDetalhada = False):
         maquinasTransmitindo = []
 
         for maquina in listaEstacao:
-            maquina.tentarTransmitir(canalTeste)
+            maquina.tentarTransmitir(canalTeste,tempo)
             if maquina.emEspera == False:
                 maquinasTransmitindo.append(maquina)
+            if maquina.numColisoes == 16:
+                listaFalhas.append(maquina)
+                listaEstacao.remove(maquina)
 
         if len(maquinasTransmitindo) == 1:
             canalTeste.ocuparCanal(maquinasTransmitindo[0].numeroEstacao)
-            terminouSimular = True
+            listaMaquinasTransmitidas.append(maquinasTransmitindo[0])
+            listaEstacao.remove(maquinasTransmitindo[0])
 
         elif len(maquinasTransmitindo) > 1:
             for i in maquinasTransmitindo:
                 i.colisao()
                 canalTeste.ocorrerColisao()
 
-        canalTeste.passarCanal()
-        tempo+=1
+        if len(listaEstacao) == 0:
+            terminouSimular = True
+            break
 
+        canalTeste.passarCanal()
+        tempo += 1
+        if canalTeste.estadoCanal():
+            canalTeste.desocuparCanal()
+
+    mediaTempo = 0
+    menorTempo = listaMaquinasTransmitidas[0].tempoTransmissao
+    for i in listaMaquinasTransmitidas:
+        mediaTempo += i.tempoTransmissao
+        if i.tempoTransmissao < menorTempo:
+            menorTempo = i.tempoTransmissao
+    mediaTempo = mediaTempo / N
 
     if impressaoDetalhada:
-        #for i in listaEstacao:
-            #i.printEstacao()
+        print("Maquinas que falharam:")
+        for i in listaFalhas:
+            i.printEstacao()
+        print("Maquinas que deram em sucesso:")
+        for i in listaMaquinasTransmitidas:
+            i.printEstacao()
 
-        #print()
-        #print("Dados do canal:")
-        #canalTeste.printCanal()
-        #print("Tempo: %.4f u segundos"%(float(tempo)*51.2))
-        #print("--------------------------")
-        #print()
-        pass
+        print("Dados do canal:")
+        canalTeste.printCanal()
+        print("Primeira máquina transmitir: %.4f u segundos" % (float(menorTempo) * 51.2))
+        print("Média do tempo: %.4f u segundos" % (float(mediaTempo) * 51.2))
 
-    return tempo
+    return menorTempo, mediaTempo

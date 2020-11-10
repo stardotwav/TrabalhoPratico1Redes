@@ -17,26 +17,28 @@ while(True):
     if(comando == 1):
         maquinas = int(input("Digite o Número de Máquinas usadas: "))
 
-        vetorResultado = []
-        vetorTentativa = []
+        numTentativa = []
+        vetorTempoMedio = []
+        vetorTempoPrimeira = []
 
         for i in range(33):
-            vetorTentativa.append(i)
-            vetorResultado.append(executarAlohaSlotted(maquinas,1024,True))
+            numTentativa.append(i)
+            tempoPrimeiro,tempoMedio = executarAlohaSlotted(maquinas, 1024, True)
+            vetorTempoPrimeira.append(tempoPrimeiro)
+            vetorTempoMedio.append(tempoMedio)
 
-        plt.plot(vetorTentativa, vetorResultado)
-        plt.title("Slotted Aloha")
-        plt.xlabel('Tentativa')
-        plt.ylabel('Resultado')
-        nomeArquivo = "slottedAloha.png"
-        plt.savefig(nomeArquivo)
+
+        plt.plot(numTentativa, vetorTempoPrimeira)
+        plt.xlabel("Tentativa")
+        plt.ylabel('Tempo Primeiro Estção Transmitir')
+        plt.savefig('slottedAlohaPrimeiraEstacao.png')
         plt.show()
 
-        print()
-        print("-------------------------")
-        print("Média: %.4f" % float(statistics.mean(vetorResultado)))
-        print("Desvio Padrão: %.4f" % float(statistics.stdev(vetorResultado)))
-        print("-------------------------")
+        plt.plot(numTentativa, vetorTempoMedio)
+        plt.xlabel("Tentativa")
+        plt.ylabel('Média de Tempo')
+        plt.savefig('slottedAlohaTodasEstacoes.png')
+        plt.show()
 
     elif(comando == 2):
         maquinas = int(input("Digite o Número de Máquinas usadas: "))
