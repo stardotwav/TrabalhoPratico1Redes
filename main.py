@@ -23,79 +23,96 @@ while(True):
 
         for i in range(33):
             numTentativa.append(i)
-            tempoPrimeiro,tempoMedio = executarAlohaSlotted(maquinas, 1024, True)
-            vetorTempoPrimeira.append(tempoPrimeiro)
-            vetorTempoMedio.append(tempoMedio)
+            tempoPrimeiro,tempoMedio = executarAlohaSlotted(maquinas, 1024, False)
+            vetorTempoPrimeira.append(51.2 * tempoPrimeiro)
+            vetorTempoMedio.append(51.2 * tempoMedio)
+
+
+        print("--------------------------------------------")
+        print("Média Primeira Estação: %.4f" % float(statistics.mean(vetorTempoPrimeira)))
+        print("Desvio Padrão Primeira Estção: %.4f" % float(statistics.stdev(vetorTempoPrimeira)))
+        print("Média Todas as Estações: %.4f" % float(statistics.mean(vetorTempoMedio)))
+        print("Desvio Padrão Todas as Estações: %.4f" % float(statistics.stdev(vetorTempoMedio)))
+        print("--------------------------------------------")
 
 
         plt.plot(numTentativa, vetorTempoPrimeira)
         plt.xlabel("Tentativa")
         plt.ylabel('Tempo Primeiro Estção Transmitir')
-        plt.savefig('slottedAlohaPrimeiraEstacao.png')
+        plt.savefig('slottedAlohaPrimeiraEstacao' + str(maquinas) + '.png')
         plt.show()
 
         plt.plot(numTentativa, vetorTempoMedio)
         plt.xlabel("Tentativa")
         plt.ylabel('Média de Tempo')
-        plt.savefig('slottedAlohaTodasEstacoes.png')
+        plt.savefig('slottedAlohaTodasEstacoes' + str(maquinas) + '.png')
         plt.show()
 
     elif(comando == 2):
         maquinas = int(input("Digite o Número de Máquinas usadas: "))
 
-        vetorResultado = []
-        vetorTentativa = []
+        numTentativa = []
+        vetorTempoMedio = []
+        vetorTempoPrimeira = []
 
         for i in range(33):
-            vetorTentativa.append(i)
-            vetorResultado.append(executarCSMAP(maquinas,1,1024,True))
+            numTentativa.append(i)
+            tempoPrimeiro,tempoMedio = executarCSMAP(maquinas,1,1024,False)
+            vetorTempoPrimeira.append(tempoPrimeiro)
+            vetorTempoMedio.append(tempoMedio)
 
-        plt.plot(vetorTentativa, vetorResultado)
-        plt.title("CSMA P-Persistente")
-        plt.xlabel('Tentativa')
-        plt.ylabel('Resultado')
-        nomeArquivo = "csmaPPersistente.png"
-        plt.savefig(nomeArquivo)
+        print("--------------------------------------------")
+        print("Média Primeira Estação: %.4f" % float(statistics.mean(vetorTempoPrimeira)))
+        print("Desvio Padrão Primeira Estção: %.4f" % float(statistics.stdev(vetorTempoPrimeira)))
+        print("Média Todas as Estações: %.4f" % float(statistics.mean(vetorTempoMedio)))
+        print("Desvio Padrão Todas as Estações: %.4f" % float(statistics.stdev(vetorTempoMedio)))
+        print("--------------------------------------------")
+
+        plt.plot(numTentativa, vetorTempoPrimeira)
+        plt.xlabel("Tentativa")
+        plt.ylabel('Tempo Primeiro Estção Transmitir')
+        plt.savefig('csmaPPersistentePrimeiraEstacao' + str(maquinas) + '.png')
         plt.show()
 
-        print()
-        print("-------------------------")
-        print("Média: %.4f" % float(statistics.mean(vetorResultado)))
-        print("Desvio Padrão: %.4f" % float(statistics.stdev(vetorResultado)))
-        print("-------------------------")
+        plt.plot(numTentativa, vetorTempoMedio)
+        plt.xlabel("Tentativa")
+        plt.ylabel('Média de Tempo')
+        plt.savefig('csmaPPersistenteTodasEstacoes' + str(maquinas) + '.png')
+        plt.show()
+
         
     elif(comando == 3):
         maquinas = int(input("Digite o Número de Máquinas usadas: "))
-        
-        vetorResultado = []
-        vetorTentativa = []
+
+        numTentativa = []
+        vetorTempoMedio = []
+        vetorTempoPrimeira = []
 
         for i in range(33):
-            vetorTentativa.append(i)
-            vetorResultado.append(executarRecuo(maquinas,True))
+            numTentativa.append(i)
+            tempoPrimeiro,tempoMedio = executarRecuo(maquinas,False)
+            vetorTempoPrimeira.append(tempoPrimeiro)
+            vetorTempoMedio.append(tempoMedio)
 
-        plt.plot(vetorTentativa, vetorResultado)
-        plt.title("Algoritmo de Recuo Binário Exponencial")
-        plt.xlabel('Tentativa')
-        plt.ylabel('Resultado')
-        nomeArquivo = "algoritmoBinarioExponencial.png"
-        plt.savefig(nomeArquivo)
+
+        print("--------------------------------------------")
+        print("Média Primeira Estação: %.4f" % float(statistics.mean(vetorTempoPrimeira)))
+        print("Desvio Padrão Primeira Estção: %.4f" % float(statistics.stdev(vetorTempoPrimeira)))
+        print("Média Todas as Estações: %.4f" % float(statistics.mean(vetorTempoMedio)))
+        print("Desvio Padrão Todas as Estações: %.4f" % float(statistics.stdev(vetorTempoMedio)))
+        print("--------------------------------------------")
+
+        plt.plot(numTentativa, vetorTempoPrimeira)
+        plt.xlabel("Tentativa")
+        plt.ylabel('Tempo Primeiro Estção Transmitir')
+        plt.savefig('algoritmoBinarioExponencialPrimeiraEstacao' + str(maquinas) + '.png')
         plt.show()
 
-        print()
-        print("-------------------------")
-        print("Média: %.4f" % float(statistics.mean(vetorResultado)))
-        print("Desvio Padrão: %.4f" % float(statistics.stdev(vetorResultado)))
-        print("-------------------------")
+        plt.plot(numTentativa, vetorTempoMedio)
+        plt.xlabel("Tentativa")
+        plt.ylabel('Média de Tempo')
+        plt.savefig('algoritmoBinarioExponencialTodasEstacoes' + str(maquinas) + '.png')
+        plt.show()
         
     else:
         break
-
-#vetorResultado = []
-#for i in range(33):
-    #vetorResultado.append(executarAlohaSlotted(10,3,True))
-    #executarCSMAP(10,1,2,True)
-
-#executarAlohaSlotted(10,5000,True)
-#executarCSMAP(10,25,2,True)
-#executarRecuo(10,True)
