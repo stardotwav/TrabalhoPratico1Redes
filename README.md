@@ -24,7 +24,5 @@ Dessa forma, será exibido um menu, indicando para qual dos 3 algoritmos poderá
 
 ## Participantes
 [Estela Miranda Batista](https://github.com/Estelamb)
-
 <br>
-
 [João Marcos Alves Modesto Ramos](https://github.com/raitocan)
