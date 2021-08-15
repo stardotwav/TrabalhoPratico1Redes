@@ -20,3 +20,8 @@ Após instalar a biblioteca citada, basta utilizar do comando
 
 
 Dessa forma, será exibido um menu, indicando para qual dos 3 algoritmos poderá ser executado, e ao escolher o algoritmo desejado, basta escolher a quantidade de máquinas que gostaria de simular, e após isso, na pasta do projeto será o gráfico daquele caso.
+
+
+## Participantes
+[Estela Miranda Batista](https://github.com/Estelamb)
+[João Marcos Alves Modesto Ramos](https://github.com/raitocan)
